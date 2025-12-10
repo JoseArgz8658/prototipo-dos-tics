@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechSisters - Mentorías y Red de Referentes Femeninos en Tecnología</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+
+        .user-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 2em;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navegación -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">TS</span>
+                    </div>
+                    <span class="text-2xl font-bold gradient-text">TechSisters</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="showScreen('home')" class="nav-btn px-4 py-2 rounded-lg transition font-medium text-gray-700 hover:bg-gray-100">
+                        🏠 Inicio
+                    </button>
+                    <button onclick="showScreen('mentorships')" class="nav-btn px-4 py-2 rounded-lg transition font-medium text-gray-700 hover:bg-gray-100">
+                        👥 Mentorías
+                    </button>
+                    <button onclick="showScreen('referents')" class="nav-btn px-4 py-2 rounded-lg transition font-medium text-gray-700 hover:bg-gray-100">
+                        ⭐ Referentes
+                    </button>
+                    <button onclick="showScreen('resources')" class="nav-btn px-4 py-2 rounded-lg transition font-medium text-gray-700 hover:bg-gray-100">
+                        📚 Recursos
+                    </button>
+                </div>
+                <button class="gradient-bg text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition">
+                    Únete Ahora
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pantalla de Inicio -->
+    <div id="home-screen" class="screen">
+        <div class="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-white">
+            <div class="max-w-7xl mx-auto px-6 py-20">
+                <div class="text-center mb-16">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 gradient-text">
+                        Impulsa tu carrera tech con mentorías personalizadas
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-700 mb-8 max-w-3xl mx-auto">
+                        Conecta con profesionales expertas, accede a recursos exclusivos y forma parte de una comunidad que te apoya en cada paso.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="openModal()" class="gradient-bg text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-2xl transform hover:scale-105 transition">
+                            Conectar con una mentora →
+                        </button>
+                        <button onclick="showScreen('referents')" class="bg-white text-purple-600 border-2 border-purple-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-50 transition">
+                            Conocer Referentes
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8 mb-20">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4 text-3xl">
+                            👥
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Mentorías 1:1</h3>
+                        <p class="text-gray-600">
+                            Sesiones personalizadas con expertas que entienden tus desafíos y te guían hacia tus objetivos profesionales.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
+                        <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mb-4 text-3xl">
+                            ⭐
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Referentes Inspiradoras</h3>
+                        <p class="text-gray-600">
+                            Conoce historias reales de mujeres líderes en tecnología y encuentra tu modelo a seguir.
+                        </p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg card-hover">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4 text-3xl">
+                            📚
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Recursos Exclusivos</h3>
+                        <p class="text-gray-600">
+                            Accede a talleres, guías, herramientas y contenido diseñado para acelerar tu crecimiento.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="gradient-bg rounded-3xl p-12 text-white text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        ¿Por qué TechSisters?
+                    </h2>
+                    <p class="text-xl mb-8 max-w-3xl mx-auto opacity-90">
+                        Sabemos que el camino en tecnología puede ser desafiante. Por eso creamos un espacio donde las mujeres encuentran apoyo, inspiración y las herramientas necesarias para triunfar.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-6 text-left">
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                            <div class="text-4xl font-bold mb-2">500+</div>
+                            <div class="text-lg">Mentorías realizadas</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                            <div class="text-4xl font-bold mb-2">50+</div>
+                            <div class="text-lg">Mentoras activas</div>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+                            <div class="text-4xl font-bold mb-2">95%</div>
+                            <div class="text-lg">Satisfacción reportada</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Mentorías -->
+    <div id="mentorships-screen" class="screen hidden">
+        <div class="min-h-screen bg-gray-50 py-12">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                        Encuentra tu mentora ideal
+                    </h1>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+                        Conecta con profesionales expertas que te ayudarán a alcanzar tus metas en tecnología.
+                    </p>
+                    <button onclick="openModal()" class="gradient-bg text-white px-8 py-4 rounded-lg text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition">
+                        📅 Solicitar Mentoría Ahora
+                    </button>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="mentors-grid">
+                    <!-- Se generará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Referentes -->
+    <div id="referents-screen" class="screen hidden">
+        <div class="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                        Conoce a nuestras referentes
+                    </h1>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Historias reales de mujeres que están transformando la industria tecnológica.
+                    </p>
+                </div>
+
+                <div class="space-y-8" id="referents-list">
+                    <!-- Se generará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla de Recursos -->
+    <div id="resources-screen" class="screen hidden">
+        <div class="min-h-screen bg-gray-50 py-12">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">
+                        Recursos para tu crecimiento
+                    </h1>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Talleres, guías y herramientas diseñadas para impulsar tu desarrollo profesional.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="resources-grid">
+                    <!-- Se generará dinámicamente -->
+                </div>
+
+                <div class="mt-16 bg-white rounded-2xl shadow-xl p-8 text-center">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">¿No encuentras lo que buscas?</h2>
+                    <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                        Estamos constantemente agregando nuevos recursos. Déjanos saber qué te gustaría aprender.
+                    </p>
+                    <button class="gradient-bg text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                        Sugerir un Recurso
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Solicitud de Mentoría -->
+    <div id="mentorship-modal" class="hidden fixed inset-0 modal-backdrop flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="gradient-bg p-6 text-white relative">
+                <button onclick="closeModal()" class="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-2 transition">
+                    ✕
+                </button>
+                <h2 class="text-3xl font-bold">Solicitud de Mentoría</h2>
+                <p class="text-white/90 mt-2">Paso <span id="current-step">1</span> de 3</p>
+                <div class="flex space-x-2 mt-4">
+                    <div id="progress-1" class="flex-1 h-2 rounded-full bg-white"></div>
+                    <div id="progress-2" class="flex-1 h-2 rounded-full bg-white/30"></div>
+                    <div id="progress-3" class="flex-1 h-2 rounded-full bg-white/30"></div>
+                </div>
+            </div>
+
+            <div class="p-8">
+                <!-- Paso 1 -->
+                <div id="step-1" class="step-content">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Información Personal</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nombre Completo</label>
+                            <input type="text" id="name-input" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none transition" placeholder="Tu nombre">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                            <input type="email" id="email-input" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none transition" placeholder="tu@email.com">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 2 -->
+                <div id="step-2" class="step-content hidden">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Área de Interés</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">¿En qué área necesitas mentoría?</label>
+                            <select id="area-select" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none transition">
+                                <option value="">Selecciona un área</option>
+                                <option value="backend">Desarrollo Backend</option>
+                                <option value="frontend">Desarrollo Frontend</option>
+                                <option value="mobile">Desarrollo Mobile</option>
+                                <option value="data">Data Science & IA</option>
+                                <option value="devops">DevOps & Cloud</option>
+                                <option value="security">Ciberseguridad</option>
+                                <option value="design">UX/UI Design</option>
+                                <option value="career">Desarrollo de Carrera</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">¿Qué esperas lograr con esta mentoría?</label>
+                            <textarea id="goals-textarea" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none transition" rows="4" placeholder="Describe tus objetivos y expectativas..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 3 -->
+                <div id="step-3" class="step-content hidden">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Selecciona tu Mentora</h3>
+                    <div class="space-y-4" id="mentor-selection">
+                        <!-- Se generará dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Paso 4 - Confirmación -->
+                <div id="step-4" class="step-content hidden text-center space-y-6 py-8">
+                    <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto text-5xl">
+                        ✓
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-800">¡Solicitud Enviada!</h3>
+                    <p class="text-gray-600 text-lg max-w-md mx-auto">
+                        Tu mentora revisará tu solicitud y te contactará en las próximas 48 horas al email proporcionado.
+                    </p>
+                    <div class="bg-purple-50 p-6 rounded-xl">
+                        <p class="text-sm text-gray-700">
+                            <strong>Próximos pasos:</strong><br/>
+                            1. Recibirás un email de confirmación<br/>
+                            2. Tu mentora te contactará para agendar la primera sesión<br/>
+                            3. Prepara tus preguntas y objetivos para la mentoría
+                        </p>
+                    </div>
+                    <button onclick="closeModal()" class="gradient-bg text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                        Volver al Inicio
+                    </button>
+                </div>
+
+                <!-- Botones de navegación -->
+                <div id="modal-buttons" class="flex justify-between mt-8">
+                    <button id="back-btn" onclick="previousStep()" class="hidden px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition">
+                        Atrás
+                    </button>
+                    <button id="next-btn" onclick="nextStep()" class="ml-auto gradient-bg text-white px-8 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de mentoras
+        const mentors = [
+            {
+                id: 1,
+                name: "María González",
+                role: "Senior Software Engineer",
+                company: "Google",
+                location: "San Francisco, CA",
+                specialties: ["Cloud Computing", "Backend Development", "Microservicios"],
+                experience: "12 años",
+                bio: "Especialista en arquitectura de sistemas escalables. Apasionada por ayudar a mujeres a crecer en tecnología."
+            },
+            {
+                id: 2,
+                name: "Ana Martínez",
+                role: "UX/UI Lead Designer",
+                company: "Airbnb",
+                location: "Madrid, España",
+                specialties: ["Design Systems", "User Research", "Accesibilidad"],
+                experience: "8 años",
+                bio: "Creadora de experiencias digitales inclusivas. Mentora activa en comunidades tech."
+            },
+            {
+                id: 3,
+                name: "Laura Fernández",
+                role: "Data Science Manager",
+                company: "Microsoft",
+                location: "Seattle, WA",
+                specialties: ["Machine Learning", "Big Data", "Python"],
+                experience: "10 años",
+                bio: "Líder en proyectos de IA. Comprometida con la diversidad en STEM."
+            },
+            {
+                id: 4,
+                name: "Carmen Rodríguez",
+                role: "DevOps Engineer",
+                company: "Amazon",
+                location: "Dublín, Irlanda",
+                specialties: ["Kubernetes", "CI/CD", "AWS"],
+                experience: "9 años",
+                bio: "Experta en infraestructura cloud. Fundadora de grupos de mujeres en DevOps."
+            },
+            {
+                id: 5,
+                name: "Isabel Torres",
+                role: "Cybersecurity Architect",
+                company: "IBM",
+                location: "Austin, TX",
+                specialties: ["Security", "Penetration Testing", "Blockchain"],
+                experience: "15 años",
+                bio: "Pionera en ciberseguridad. Mentora de nuevas generaciones de profesionales tech."
+            }
+        ];
+
+        // Datos de recursos
+        const resources = [
+            {
+                title: "Introducción a Python",
+                type: "Taller Online",
+                duration: "4 semanas",
+                level: "Principiante",
+                date: "15 Ene 2025"
+            },
+            {
+                title: "Construyendo tu Portfolio Tech",
+                type: "Guía PDF",
+                duration: "Lectura 30 min",
+                level: "Todos los niveles",
+                date: "Disponible ahora"
+            },
+            {
+                title: "Preparación para Entrevistas",
+                type: "Workshop",
+                duration: "2 horas",
+                level: "Intermedio",
+                date: "22 Ene 2025"
+            },
+            {
+                title: "Git & GitHub para Equipos",
+                type: "Curso Online",
+                duration: "6 semanas",
+                level: "Intermedio",
+                date: "1 Feb 2025"
+            },
+            {
+                title: "Herramientas de IA para Productividad",
+                type: "Webinar",
+                duration: "1 hora",
+                level: "Todos los niveles",
+                date: "10 Ene 2025"
+            },
+            {
+                title: "Networking Efectivo en Tech",
+                type: "Guía Interactiva",
+                duration: "Lectura 20 min",
+                level: "Todos los niveles",
+                date: "Disponible ahora"
+            }
+        ];
+
+        let currentStep = 1;
+        let selectedMentor = null;
+
+        // Navegación entre pantallas
+        function showScreen(screenName) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenName + '-screen').classList.remove('hidden');
+            
+            // Actualizar botones de navegación activos
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-purple-100', 'text-purple-700');
+                btn.classList.add('text-gray-700', 'hover:bg-gray-100');
+            });
+            
+            window.scrollTo(0, 0);
+        }
+
+        // Generar tarjetas de mentoras
+        function renderMentors() {
+            const grid = document.getElementById('mentors-grid');
+            grid.innerHTML = mentors.map(mentor => `
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-purple-100 to-pink-100 p-6 text-center">
+                        <div class="w-24 h-24 mx-auto mb-4 border-4 border-white shadow-lg rounded-full user-icon">
+                            👤
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">${mentor.name}</h3>
+                        <p class="text-purple-600 font-medium">${mentor.role}</p>
+                        <div class="flex items-center justify-center space-x-2 mt-2 text-gray-600 text-sm">
+                            <span>💼</span>
+                            <span>${mentor.company}</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-2 mt-1 text-gray-600 text-sm">
+                            <span>📍</span>
+                            <span>${mentor.location}</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4 text-sm">${mentor.bio}</p>
+                        <div class="mb-4">
+                            <div class="text-sm font-semibold text-gray-700 mb-2">Especialidades:</div>
+                            <div class="flex flex-wrap gap-2">
+                                ${mentor.specialties.map(spec => `
+                                    <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-medium">${spec}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-600 mb-4">
+                            <strong>Experiencia:</strong> ${mentor.experience}
+                        </div>
+                        <button onclick="selectMentorAndOpen('${mentor.name}')" class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            Solicitar Mentoría
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generar lista de referentes
+        function renderReferents() {
+            const list = document.getElementById('referents-list');
+            list.innerHTML = mentors.map((mentor, idx) => `
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} card-hover">
+                    <div class="md:w-1/3 bg-gradient-to-br from-purple-200 to-pink-200 flex items-center justify-center p-12">
+                        <div class="w-48 h-48 border-8 border-white shadow-2xl rounded-full user-icon">
+                            👤
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 p-8">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h2 class="text-3xl font-bold text-gray-800 mb-2">${mentor.name}</h2>
+                                <p class="text-xl text-purple-600 font-semibold mb-1">${mentor.role}</p>
+                                <div class="flex items-center space-x-4 text-gray-600">
+                                    <div class="flex items-center space-x-1">
+                                        <span>💼</span>
+                                        <span>${mentor.company}</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <span>📍</span>
+                                        <span>${mentor.location}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-purple-100 px-4 py-2 rounded-full">
+                                <span class="text-purple-700 font-semibold text-sm">${mentor.experience}</span>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-700 text-lg mb-6 leading-relaxed">
+                            ${mentor.bio}
+                        </p>
+                        
+                        <div class="mb-6">
+                            <h3 class="text-lg font-bold text-gray-800 mb-3">Áreas de Expertise:</h3>
+                            <div class="flex flex-wrap gap-3">
+                                ${mentor.specialties.map(spec => `
+                                    <span class="bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 px-4 py-2 rounded-lg font-medium">${spec}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <button onclick="selectMentorAndOpen('${mentor.name}')" class="gradient-bg text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition flex items-center space-x-2">
+                            <span>✉️</span>
+                            <span>Conectar con ${mentor.name.split(' ')[0]}</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Generar tarjetas de recursos
+        function renderResources() {
+            const grid = document.getElementById('resources-grid');
+            grid.innerHTML = resources.map(resource => `
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden card-hover">
+                    <div class="bg-gradient-to-br from-purple-500 to-pink-500 h-2"></div>
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-3">
+                            <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                ${resource.type}
+                            </span>
+                            <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-medium">
+                                ${resource.level}
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">${resource.title}</h3>
+                        <div class="space-y-2 mb-4 text-sm text-gray-600">
+                            <div class="flex items-center space-x-2">
+                                <span>📅</span>
+                                <span>${resource.date}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span>📚</span>
+                                <span>${resource.duration}</span>
+                            </div>
+                        </div>
+                        <button class="w-full gradient-bg text-white py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            Acceder Ahora
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal de mentoría
+        function openModal() {
+            document.getElementById('mentorship-modal').classList.remove('hidden');
+            currentStep = 1;
+            updateModalStep();
+        }
+
+        function closeModal() {
+            document.getElementById('mentorship-modal').classList.add('hidden');
+            currentStep = 1;
+            selectedMentor = null;
+            document.getElementById('name-input').value = '';
+            document.getElementById('email-input').value = '';
+            document.getElementById('area-select').value = '';
+            document.getElementById('goals-textarea').value = '';
+            updateModalStep();
+        }
+
+        function selectMentorAndOpen(mentorName) {
+            selectedMentor = mentorName;
+            openModal();
+        }
+
+        function updateModalStep() {
+            // Ocultar todos los pasos
+            document.querySelectorAll('.step-content').forEach(step => step.classList.add('hidden'));
+            
+            // Mostrar paso actual
+            document.getElementById('step-' + currentStep).classList.remove('hidden');
+            document.getElementById('current-step').textContent = currentStep;
+            
+            // Actualizar progreso
+            for (let i = 1; i <= 3; i++) {
+                const progress = document.getElementById('progress-' + i);
+                if (i <= currentStep) {
+                    progress.classList.remove('bg-white/30');
+                    progress.classList.add('bg-white');
+                } else {
+                    progress.classList.remove('bg-white');
+                    progress.classList.add('bg-white/30');
+                }
+            }
+            
+            // Mostrar/ocultar botones
+            const backBtn = document.getElementById('back-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const modalButtons = document.getElementById('modal-buttons');
+            
+            if (currentStep === 4) {
+                modalButtons.classList.add('hidden');
+            } else {
+                modalButtons.classList.remove('hidden');
+                
+                if (currentStep > 1) {
+                    backBtn.classList.remove('hidden');
+                } else {
+                    backBtn.classList.add('hidden');
+                }
+                
+                if (currentStep === 3) {
+                    nextBtn.textContent = 'Enviar Solicitud';
+                } else {
+                    nextBtn.textContent = 'Siguiente';
+                }
+            }
+            
+            // Renderizar selección de mentoras en paso 3
+            if (currentStep === 3) {
+                renderMentorSelection();
+            }
+        }
+
+        function renderMentorSelection() {
+            const container = document.getElementById('mentor-selection');
+            container.innerHTML = mentors.slice(0, 3).map(mentor => `
+                <div onclick="selectMentorInModal('${mentor.name}')" 
+                     class="mentor-option border-2 rounded-xl p-4 cursor-pointer transition hover:shadow-lg ${selectedMentor === mentor.name ? 'border-purple-500 bg-purple-50' : 'border-gray-200'}"
+                     data-mentor="${mentor.name}">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-full user-icon">
+                            👤
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-800">${mentor.name}</h4>
+                            <p class="text-sm text-purple-600">${mentor.role}</p>
+                            <p class="text-xs text-gray-600">${mentor.company}</p>
+                        </div>
+                        ${selectedMentor === mentor.name ? '<span class="text-2xl">✓</span>' : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectMentorInModal(mentorName) {
+            selectedMentor = mentorName;
+            renderMentorSelection();
+        }
+
+        function nextStep() {
+            // Validaciones
+            if (currentStep === 1) {
+                const name = document.getElementById('name-input').value;
+                const email = document.getElementById('email-input').value;
+                if (!name || !email) {
+                    alert('Por favor completa todos los campos');
+                    return;
+                }
+            }
+            
+            if (currentStep === 2) {
+                const area = document.getElementById('area-select').value;
+                if (!area) {
+                    alert('Por favor selecciona un área de interés');
+                    return;
+                }
+            }
+            
+            if (currentStep === 3) {
+                if (!selectedMentor) {
+                    alert('Por favor selecciona una mentora');
+                    return;
+                }
+                // Enviar solicitud
+                currentStep = 4;
+                updateModalStep();
+                return;
+            }
+            
+            currentStep++;
+            updateModalStep();
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateModalStep();
+            }
+        }
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            renderMentors();
+            renderReferents();
+            renderResources();
+            showScreen('home');
+        });
+    </script>
+</body>
+</html>
